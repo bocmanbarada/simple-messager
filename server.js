@@ -26,8 +26,8 @@ io.on('connection', (socket) => {
     const message = {
       id: Date.now(),
       text: msg.text,
-      user: msg.user || 'Anonymous',
-      timestamp: new Date().toLocaleTimeString()
+      user: msg.user || 'Аноним',
+      timestamp: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit'})
     };
     messages.push(message);
     io.emit('new message', message);
