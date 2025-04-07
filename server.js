@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://bocmanbarada.ru", // Разрешить все домены (замените на ваш домен Tilda в продакшене)
+    origin: ["https://bocmanbarada.ru", "https://messenger.bocmanbarada.ru"], // Разрешить все домены (замените на ваш домен Tilda в продакшене)
     methods: ["GET", "POST"]
   }
 });
