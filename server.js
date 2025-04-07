@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('notification', {
       title: 'Новое сообщение',
       body: `${message.user}: ${message.text}`,
-      icon: 'https://your-site.com/icon.png' // Замените на реальный URL иконки
+      icon: 'https://static.tildacdn.com/tild6462-3363-4265-b830-306366666164/icon-512x512.png' // Замените на реальный URL иконки
     });
   });
 });
