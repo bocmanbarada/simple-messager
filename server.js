@@ -31,6 +31,13 @@ io.on('connection', (socket) => {
     };
     messages.push(message);
     io.emit('new message', message);
+
+    // Отправляем событие для уведомления всем, кроме отправителя
+    socket.broadcast.emit('notification', {
+      title: 'Новое сообщение',
+      body: `${message.user}: ${message.text}`,
+      icon: 'https://your-site.com/icon.png' // Замените на реальный URL иконки
+    });
   });
 });
 
