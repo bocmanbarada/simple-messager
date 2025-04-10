@@ -38,21 +38,21 @@ io.on('connection', (socket) => {
 
     // Отправляем событие для уведомления всем, кроме отправителя
     socket.broadcast.emit('notification', {
-      title: 'Новое сообщение',
-      body: `${message.user}: ${message.text}`,
+      title: `${message.user}`,
+      body: `${message.text}`,
       icon: 'https://messenger.bocmanbarada.ru/assets/icons/icon-512x512.png' // Замените на реальный URL иконки
     });
   });
 });
 
-const webpush = require('web-push');
+// const webpush = require('web-push');
 
 // Установка VAPID-ключей
-webpush.setVapidDetails(
-  'mailto:x9037758413@gmail.com', // Контактная почта
-  process.env.PUBLIC_KEY, // Из переменных среды
-  process.env.PRIVATE_KEY
-);
+// webpush.setVapidDetails(
+//   'mailto:x9037758413@gmail.com', // Контактная почта
+//   process.env.PUBLIC_KEY, // Из переменных среды
+//   process.env.PRIVATE_KEY
+// );
 
 // Старт сервера
 const PORT = process.env.PORT || 3000;
