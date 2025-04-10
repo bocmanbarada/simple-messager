@@ -11,6 +11,10 @@ const io = socketIo(server, {
     methods: ["GET", "POST"]
   }
 });
+const cors = require('cors');
+app.use(cors({
+  origin: ["https://bocmanbarada.ru", "https://messenger.bocmanbarada.ru"]
+}));
 
 // Раздача статики (если нужно)
 app.use(express.static(path.join(__dirname, 'public')));
