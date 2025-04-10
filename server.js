@@ -41,6 +41,23 @@ io.on('connection', (socket) => {
   });
 });
 
+const webpush = require('web-push');
+
+// Установка VAPID-ключей
+webpush.setVapidDetails(
+  'mailto: <x9037758413@gmail.com>', // Контактная почта
+  'PUBLIC_KEY',            // Ваш Public Key
+  'PRIVATE_KEY'            // Ваш Private Key
+);
+
+// Отправка уведомления
+// webpush.sendNotification(subscription, 'Новое сообщение в чате!');
+webpush.sendNotification(subscription, {
+  title: 'Новое сообщение',
+  body: `${message.user}: ${message.text}`,
+  icon: 'https://messenger.bocmanbarada.ru/assets/icons/icon-192x192.png' // Замените на реальный URL иконки
+});
+
 // Старт сервера
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
