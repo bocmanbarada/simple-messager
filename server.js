@@ -45,17 +45,47 @@ const webpush = require('web-push');
 
 // Установка VAPID-ключей
 webpush.setVapidDetails(
-  'mailto: <x9037758413@gmail.com>', // Контактная почта
+  'mailto:x9037758413@gmail.com', // Контактная почта
   process.env.PUBLIC_KEY, // Из переменных среды
   process.env.PRIVATE_KEY
 );
 
-// Отправка уведомления
-// webpush.sendNotification(subscription, 'Новое сообщение в чате!');
-webpush.sendNotification(subscription, {
-  title: 'Новое сообщение',
-  body: `${message.user}: ${message.text}`,
-  icon: 'https://messenger.bocmanbarada.ru/assets/icons/icon-192x192.png' // Замените на реальный URL иконки
+// Middleware для работы с JSON
+app.use(express.json());
+
+// 2. Хранилище подписок (в реальном проекте используйте БД)
+const subscriptions = [];
+
+// 3. Роут для сохранения подписки
+app.post('/subscribe', (req, res) => {
+  const subscription = req.body;
+  
+  // Проверка подписки
+  if (!subscription) {
+    return res.status(400).json({ error: 'Subscription is required' });
+  }
+
+  subscriptions.push(subscription); // Сохраняем подписку
+  console.log('Новая подписка:', subscription);
+  res.status(201).json({ message: 'Подписка сохранена' });
+});
+
+// 4. Роут для отправки уведомления
+app.get('/send-notification', (req, res) => {
+  if (subscriptions.length === 0) {
+    return res.status(400).json({ error: 'Нет активных подписок' });
+  }
+
+  // Отправляем уведомление всем подписчикам
+  subscriptions.forEach(sub => {
+    webpush.sendNotification(sub, JSON.stringify({
+      title: 'Новое сообщение!',
+      body: `${message.user}: ${message.text}`,
+      icon: 'https://messenger.bocmanbarada.ru/assets/icons/icon-192x192.png'
+    })).catch(err => console.error('Ошибка отправки:', err));
+  });
+
+  res.json({ message: 'Уведомления отправлены' });
 });
 
 // Старт сервера
