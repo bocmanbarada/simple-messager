@@ -54,44 +54,6 @@ webpush.setVapidDetails(
   process.env.PRIVATE_KEY
 );
 
-// Middleware для работы с JSON
-app.use(express.json());
-
-// 2. Хранилище подписок (в реальном проекте используйте БД)
-const subscriptions = [];
-
-// 3. Роут для сохранения подписки
-app.post('/subscribe', (req, res) => {
-  const subscription = req.body;
-  
-  // Проверка подписки
-  if (!subscription) {
-    return res.status(400).json({ error: 'Subscription is required' });
-  }
-
-  subscriptions.push(subscription); // Сохраняем подписку
-  console.log('Новая подписка:', subscription);
-  res.status(201).json({ message: 'Подписка сохранена' });
-});
-
-// 4. Роут для отправки уведомления
-app.get('/send-notification', (req, res) => {
-  if (subscriptions.length === 0) {
-    return res.status(400).json({ error: 'Нет активных подписок' });
-  }
-
-  // Отправляем уведомление всем подписчикам
-  subscriptions.forEach(sub => {
-    webpush.sendNotification(sub, JSON.stringify({
-      title: 'Новое сообщение!',
-      body: `${message.user}: ${message.text}`,
-      icon: 'https://messenger.bocmanbarada.ru/assets/icons/icon-192x192.png'
-    })).catch(err => console.error('Ошибка отправки:', err));
-  });
-
-  res.json({ message: 'Уведомления отправлены' });
-});
-
 // Старт сервера
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
