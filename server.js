@@ -57,7 +57,7 @@ app.use(express.json());
 const subscriptions = [];
 
 // 3. Роут для сохранения подписки
-app.post('https://messenger.bocmanbarada.ru/subscribe', (req, res) => {
+app.post('/subscribe', (req, res) => {
   const subscription = req.body;
   
   // Проверка подписки
