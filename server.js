@@ -46,8 +46,8 @@ const webpush = require('web-push');
 // Установка VAPID-ключей
 webpush.setVapidDetails(
   'mailto: <x9037758413@gmail.com>', // Контактная почта
-  'PUBLIC_KEY',            // Ваш Public Key
-  'PRIVATE_KEY'            // Ваш Private Key
+  process.env.PUBLIC_KEY, // Из переменных среды
+  process.env.PRIVATE_KEY
 );
 
 // Отправка уведомления
