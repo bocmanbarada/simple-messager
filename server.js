@@ -57,7 +57,7 @@ app.use(express.json());
 const subscriptions = [];
 
 // 3. Роут для сохранения подписки
-app.post('/subscribe', (req, res) => {
+app.post('https://messenger.bocmanbarada.ru/subscribe', (req, res) => {
   const subscription = req.body;
   
   // Проверка подписки
@@ -71,7 +71,7 @@ app.post('/subscribe', (req, res) => {
 });
 
 // 4. Роут для отправки уведомления
-app.get('/send-notification', (req, res) => {
+app.get('https://messenger.bocmanbarada.ru/send-notification', (req, res) => {
   if (subscriptions.length === 0) {
     return res.status(400).json({ error: 'Нет активных подписок' });
   }
