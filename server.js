@@ -71,7 +71,7 @@ app.post('/subscribe', (req, res) => {
 });
 
 // 4. Роут для отправки уведомления
-app.get('https://messenger.bocmanbarada.ru/send-notification', (req, res) => {
+app.get('/send-notification', (req, res) => {
   if (subscriptions.length === 0) {
     return res.status(400).json({ error: 'Нет активных подписок' });
   }
